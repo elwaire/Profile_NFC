@@ -1,0 +1,40 @@
+{
+    "header":{
+        "home": "Home",
+        "about-us": "About us",
+        "projects": "Projects",
+        "blogs": "Blogs",
+        "arts": "Arts",
+        "shop": "Shop"
+    },
+    "footer": {
+        "get-in-touch": "Get in touch",
+        "description": "Work inquiries, commission requeats, speaking inquiries, funny jokes, and just-saying-hi’s can be sent to:",
+        "Elwyn-Studio-Newsletter": "Elwyn Studio Newsletter",
+        "contact": "Contact us for support or information about our events.",
+        "subscribe": "Subscribe",
+        "subscribing": "By subscribing you agree to ",
+        "terms-of-use": "Substack's Terms of Use",
+        "our": "our",
+        "privacy-policy": "Privacy Policy",
+        "and": "and",
+        "information-collection-notice": "our Information Collection Notice"
+        },
+  
+    "404": {
+        "description": "Oh my wonderful eyes must sometimes get lost. Let me paint a beautiful picture for life to brighten your life's path!",
+        "come-back": "Come back, beautiful eyes"
+    },
+    "signin": {
+        "title": "Sign in",
+        "msg-login-success": "Login successful",
+        "msg-login-fail": "Login failed",
+        "password": "Password",
+        "password-placeholder": "Enter your password",
+        "password-required": "Password is required",
+        "passowrd-max-length": "Password must be at most 6 characters",
+        "btn-login": "Login",
+        "email-required": "Email is required",
+        "email-email": "Email is invalid"
+    }
+}

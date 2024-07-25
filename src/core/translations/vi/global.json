@@ -1,0 +1,39 @@
+{
+    "header": {
+        "home": "Trang chủ",
+        "about-us": "Về chúng tôi",
+        "projects": "Dự án",
+        "blogs": "Blogs",
+        "arts": "Nghệ thuật",
+        "shop": "Cửa hàng"
+    },
+    "footer": {
+        "get-in-touch": "Liên hệ",
+        "description": "Các yêu cầu làm việc, yêu cầu đặt hàng, yêu cầu phát biểu, những câu chuyện hài hước và những lời chào có thể được gửi đến:",
+        "Elwyn-Studio-Newsletter": "Bản tin Elwyn Studio",
+        "contact": "Liên hệ với chúng tôi để được hỗ trợ hoặc thông tin về các sự kiện của chúng tôi.",
+        "subscribe": "Đăng ký",
+        "subscribing": "Bằng cách đăng ký, bạn đồng ý với ",
+        "terms-of-use": "Điều khoản sử dụng của Substack",
+        "our": "của chúng tôi",
+        "privacy-policy": "Chính sách bảo mật",
+        "and": "và",
+        "information-collection-notice": "Thông báo về việc thu thập thông tin của chúng tôi"
+    },
+    "404": {
+        "header": "Trang không tồn tại",
+        "description": "Xin lỗi, trang bạn đang tìm kiếm không tồn tại."
+    },
+    "signin": {
+        "title": "Đăng nhập",
+        "msg-login-success": "Đăng nhập thành công",
+        "msg-login-fail": "Đăng nhập thất bại",
+        "password": "Mật khẩu",
+        "password-placeholder": "Nhập mật khẩu của bạn",
+        "password-required": "Mật khẩu là bắt buộc",
+        "passowrd-max-length": "Mật khẩu phải có tối đa 6 ký tự",
+        "btn-login": "Đăng nhập",
+        "email-required": "Email là bắt buộc",
+        "email-email": "Email không hợp lệ"
+    }
+}

@@ -1,0 +1,20 @@
+.side_bar__container{
+    @apply flex-1 max-w-[256px]  h-screen sticky top-0 py-8 flex flex-col items-center bg-white border-r border-gray-200;
+
+
+    &__logo{
+        @apply w-full flex justify-center items-center px-4 gap-2;
+
+        h1{
+            @apply font-bold text-primary text-2xl;
+        }
+    }
+
+    &__nav_bar{
+        @apply flex flex-col gap-4 mt-8 bg-pink-300 w-full;
+
+        a{
+            @apply bg-orange-200 py-2;
+        }
+    }
+}

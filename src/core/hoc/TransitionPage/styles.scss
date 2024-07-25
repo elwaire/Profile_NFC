@@ -1,0 +1,9 @@
+.slide-in{
+    @apply fixed top-0 left-0 w-full h-screen z-50 bg-white shadow-md;
+    transform-origin: top;
+}
+
+.slide-out{
+    @apply fixed top-0 left-0 w-full h-screen z-50 bg-white shadow-md;
+    transform-origin: bottom;
+}

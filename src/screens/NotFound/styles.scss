@@ -1,0 +1,23 @@
+.not_found__container{
+    @apply  mt-20 ;
+
+    img{
+        @apply w-[100%] h-[350px] object-cover;
+    }
+
+    .group__column__center{
+        @apply mt-8;
+
+        h1{
+            @apply text-6xl font-bold ;
+        }
+
+        p{
+            @apply text-center max-w-[450px] text-cl-gray;
+        }
+
+        &__link{
+            @apply mt-8 text-center font-bold underline ;
+        }
+    }
+}

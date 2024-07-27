@@ -4,7 +4,13 @@ const PATHS = {
     
     MANAGER: {
         BANNER: '/manager/banner',
-    }
+        BLOG: {
+            ROOT: '/manager/blog',
+            CREATE: '/manager/blog/create',
+            EDIT: '/manager/blog/edit/:id',
+        },
+    },
+
 }
 
 export default PATHS

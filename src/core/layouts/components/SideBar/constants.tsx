@@ -15,12 +15,12 @@ export const DataSideBar = () => {
 
         {
             key: "sub1",
-            label: "Content Management",
+            label: "Manage information",
             icon: <EditOutlined />,
             children: [
                 {
                     key: "g1",
-                    label: "Home",
+                    label: "Display information",
                     type: "group",
                     children: [
                         { key: "1", label: "Banner", onClick: () => navigate(PATHS.MANAGER.BANNER) },
@@ -29,10 +29,10 @@ export const DataSideBar = () => {
                 },
                 {
                     key: "g2",
-                    label: "Item 2",
+                    label: "Display post",
                     type: "group",
                     children: [
-                        { key: "3", label: "Option 3" },
+                        { key: "3", label: "Blog", onClick: () => navigate(PATHS.MANAGER.BLOG.ROOT) },
                         { key: "4", label: "Option 4" },
                     ],
                 },

@@ -1,4 +1,4 @@
-function log(message: string) {
+function log(message: string, data?: any) {
     const error = new Error();
   
     if (error.stack) {
@@ -6,7 +6,7 @@ function log(message: string) {
       const [fileName, lineNumber] = stackTrace.trim().split(':');
   
       if (process.env.NODE_ENV === 'development') {
-        console.log(`[${fileName}:${lineNumber}] ${message}`);
+        console.log(`[${fileName}:${lineNumber}] ${message}`, data && data);
       }
     } else {
       // Handle cases where error.stack is undefined

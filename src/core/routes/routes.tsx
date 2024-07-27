@@ -11,6 +11,9 @@ const SignInScreen = React.lazy(() => import("~/screens/SignIn"));
 // Manager
 const BannerManager = React.lazy(() => import("~/screens/Manager/BannerManager"));
 
+const BlogManager = React.lazy(() => import("~/screens/Manager/BlogManager"));
+const CreateBlog = React.lazy(() => import("~/screens/Manager/BlogManager/CreateBlog"));
+
 const NotFoundScreen = React.lazy(() => import("~/screens/NotFound"));
 
 const router = createBrowserRouter([
@@ -26,6 +29,14 @@ const router = createBrowserRouter([
             {
                 path: PATHS.MANAGER.BANNER,
                 element: <BannerManager />,
+            },
+            {
+                path: PATHS.MANAGER.BLOG.ROOT,
+                element: <BlogManager />,
+            },
+            {
+                path: PATHS.MANAGER.BLOG.CREATE,
+                element: <CreateBlog />,
             },
             {
                 path: "*",

@@ -7,7 +7,7 @@ const PATHS = {
         BLOG: {
             ROOT: '/manager/blog',
             CREATE: '/manager/blog/create',
-            EDIT: '/manager/blog/edit/:id',
+            EDIT: '/manager/blog/edit',
         },
     },
 

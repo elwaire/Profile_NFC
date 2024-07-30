@@ -1,25 +1,62 @@
-import { Button, Form, Input, message } from "antd";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
-import React from "react";
-import { Title } from "~/core/components";
+import { Button, Form, message } from "antd";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import React, { useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { FormItem, Title } from "~/core/components";
 import { db } from "~/core/configs/firebase";
-import { useAppDispatch, useAppSelector } from "~/core/hooks";
+import PATHS from "~/core/constants/path";
+import { useAppDispatch, useAppSelector, useCheckData } from "~/core/hooks";
+import { getDataFirebaseById } from "~/core/services";
 import { BlogsActions } from "~/core/store";
+import log from "~/core/utils/log";
+import ButtonAddSectionBlog from "./components/ButtonAddSectionBlog";
 import CardSectionBlog from "./components/CardSectionBlog";
 import "./styles.scss";
-import ButtonAddSectionBlog from "./components/ButtonAddSectionBlog";
-import { useNavigate } from "react-router-dom";
-import PATHS from "~/core/constants/path";
 
 const CreateBlog: React.FC = () => {
     const [form] = Form.useForm();
 
     const dispatch = useAppDispatch();
-    const sections = useAppSelector((state) => state.root.blogs.sections);
+    const { sections, loading } = useAppSelector((state) => state.root.blogs);
 
+    const { checkSnapshot } = useCheckData();
+    const param = useParams();
     const navigate = useNavigate();
 
+    const handleSetDataEdit = async () => {
+        dispatch(BlogsActions.update({ loading: true }));
+        try {
+            const docSnap = await getDataFirebaseById("blogs", `${param.id}`);
+
+            checkSnapshot(docSnap);
+
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+
+                const sections = data.sections.map((section: any, index: number) => ({
+                    key: index.toString(),
+                    images: section.images,
+                    contents: section.contents,
+                }));
+
+                dispatch(BlogsActions.update({ sections }));
+                form.setFieldsValue({ title: data.title });
+            }
+        } catch (error) {
+            log("error", error);
+        } finally {
+            dispatch(BlogsActions.update({ loading: false }));
+        }
+    };
+
+    React.useEffect(() => {
+        if (param.id) {
+            handleSetDataEdit();
+        }
+    }, [param.id]);
+
     const onFinish = async (values: any) => {
+        dispatch(BlogsActions.update({ loading: true }));
         try {
             const blogData = {
                 title: values.title,
@@ -27,46 +64,62 @@ const CreateBlog: React.FC = () => {
                     images: section.images,
                     contents: section.contents.filter((content) => content.trim() !== ""),
                 })),
-                createdAt: Timestamp.now(),
+                timeCreated: new Date().toISOString(),
             };
 
-            await addDoc(collection(db, "blogs"), blogData);
-            message.success("Blog post created successfully!");
+            if (param.id) {
+                // Cập nhật bài viết hiện có
+                const blogRef = doc(db, "blogs", param.id);
+
+                log("info", "blogData", blogData);
+                await updateDoc(blogRef, blogData);
+                message.success("Blog post updated successfully!");
+            } else {
+                // Tạo bài viết mới
+                blogData.timeCreated = new Date().toISOString();
+                await addDoc(collection(db, "blogs"), blogData);
+                message.success("Blog post created successfully!");
+            }
+
             form.resetFields();
             dispatch(BlogsActions.update({ sections: [{ key: "0", images: [], contents: [""] }] }));
-
             navigate(PATHS.MANAGER.BLOG.ROOT);
         } catch (error) {
             console.error("Error creating blog post:", error);
             message.error("An error occurred while creating the blog post.");
+        } finally {
+            dispatch(BlogsActions.update({ loading: false }));
         }
     };
 
-    return (
-        <div className="blog_manager__container">
-            <Title title="Blog Manager" backPage />
+    const renderForm = useMemo(() => {
+        return (
             <div className="blog_manager__container__wrapper">
                 <Form form={form} onFinish={onFinish} layout="vertical">
-                    <Form.Item
+                    <FormItem
                         name="title"
                         label="Blog Title"
                         rules={[{ required: true, message: "Please input the blog title!" }]}
-                    >
-                        <Input />
-                    </Form.Item>
+                    />
 
                     {sections.map((section, index) => (
                         <CardSectionBlog key={section.key} section={section} index={index} form={form} />
                     ))}
                     <ButtonAddSectionBlog />
-
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Create Blog Post
+                    <FormItem>
+                        <Button type="primary" htmlType="submit" loading={loading}>
+                            {param.id ? "Update Blog" : "Create Blog"}
                         </Button>
-                    </Form.Item>
+                    </FormItem>
                 </Form>
             </div>
+        );
+    }, [form, sections, loading]);
+
+    return (
+        <div className="blog_manager__container">
+            <Title title="Blog Manager" backPage />
+            {renderForm}
         </div>
     );
 };

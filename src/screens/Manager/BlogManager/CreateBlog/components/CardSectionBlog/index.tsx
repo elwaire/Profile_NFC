@@ -1,6 +1,6 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Form, FormInstance, Input } from "antd";
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "~/core/hooks";
 import { BlogsActions } from "~/core/store";
 import RemoveCardSectionBlog from "./components/RemoveCardSectionBlog";
@@ -11,7 +11,7 @@ import "./styles.scss";
 interface CardSectionBlogProps {
     section: {
         key: string;
-        images: string[];
+        images: Array<{ uid: string; url: string }>;
         contents: string[];
     };
     index: number;
@@ -20,20 +20,25 @@ interface CardSectionBlogProps {
 
 const CardSectionBlog: React.FC<CardSectionBlogProps> = ({ section, index, form }) => {
     const dispatch = useAppDispatch();
-    const sections = useAppSelector((state) => state.root.blogs.sections);
-    const loading = useAppSelector((state) => {
-        return state.root.blogs.loading;
-    });
+    const { sections, loading } = useAppSelector((state) => state.root.blogs);
 
-    const handleAddContent = (sectionKey: string) => {
-        dispatch(
-            BlogsActions.update({
-                sections: sections.map((section) =>
-                    section.key === sectionKey ? { ...section, contents: [...section.contents, ""] } : section,
-                ),
-            }),
-        );
-    };
+    const handleAddContent = useCallback(
+        (sectionKey: string) => {
+            dispatch(
+                BlogsActions.update({
+                    sections: sections.map((section) =>
+                        section.key === sectionKey
+                            ? {
+                                  ...section,
+                                  contents: [...section.contents, ""],
+                              }
+                            : section,
+                    ),
+                }),
+            );
+        },
+        [sections],
+    );
 
     return (
         <Card
@@ -60,7 +65,26 @@ const CardSectionBlog: React.FC<CardSectionBlogProps> = ({ section, index, form 
                         )
                     }
                 >
-                    <Input.TextArea rows={4} disabled={loading} />
+                    <Input.TextArea
+                        rows={4}
+                        disabled={loading}
+                        onChange={(e) => {
+                            dispatch(
+                                BlogsActions.update({
+                                    sections: sections.map((section) =>
+                                        section.key === section.key
+                                            ? {
+                                                  ...section,
+                                                  contents: section.contents.map((c, i) =>
+                                                      i === contentIndex ? e.target.value : c,
+                                                  ),
+                                              }
+                                            : section,
+                                    ),
+                                }),
+                            );
+                        }}
+                    />
                 </Form.Item>
             ))}
             <Button

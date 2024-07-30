@@ -1,17 +1,18 @@
-function log(message: string, data?: any) {
-    const error = new Error();
-  
-    if (error.stack) {
-      const stackTrace = error.stack.split('\n')[2];
-      const [fileName, lineNumber] = stackTrace.trim().split(':');
-  
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`[${fileName}:${lineNumber}] ${message}`, data && data);
-      }
-    } else {
-      // Handle cases where error.stack is undefined
-      console.error("Error: Unable to get stack trace");
+ const log = (...messages: unknown[]): void => {
+    if (process.env.NODE_ENV === 'development') {
+        const error = new Error();
+        const stack = error.stack?.split('\n')[2].trim();
+        const match = stack?.match(/at\s+(.*):(\d+):(\d+)/);
+ 
+        if (match) {
+            const file = match[1];
+            const line = match[2];
+            const column = match[3];
+            console.log(`Log at ${file}:${line}:${column}`, ...messages);
+        } else {
+            console.log(...messages);
+        }
     }
-  }
-  
+};
+
 export default log;

@@ -3,13 +3,10 @@ import { Input, Upload } from "antd";
 import { Link } from "react-router-dom";
 import { Title } from "~/core/components";
 import { useManagerBanner } from "~/core/hooks";
-import log from "~/core/utils/log";
 import "./styles.scss";
 
 const BannerManager: React.FC = () => {
     const { link, setLink, uploadProps, banners, loading } = useManagerBanner();
-
-    log("Render BannerManager");
 
     return (
         <div className="banner_manager__container">

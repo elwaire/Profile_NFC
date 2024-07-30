@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "~/core/configs/firebase";
 import PATHS from "~/core/constants/path";
-import log from "~/core/utils/log";
 
 const MainLayout: React.FC = () => {
     const navigate = useNavigate();
@@ -23,8 +22,6 @@ const MainLayout: React.FC = () => {
 
         return () => unsubscribe();
     }, [navigate]);
-
-    log("Render MainLayout");
 
     return (
         <div className="main_layout__container">

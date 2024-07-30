@@ -1,3 +1,4 @@
+import { memo } from "react";
 import BackPage from "../BackPage";
 import "./styles.scss";
 
@@ -15,4 +16,4 @@ const Title: React.FC<TitleProps> = ({ backPage = false, ...props }) => {
     );
 };
 
-export default Title;
+export default memo(Title);

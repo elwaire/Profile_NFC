@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { getDataFirebase, removeImageFirebase } from "../services";
-import Upload, { RcFile, UploadFile, UploadProps } from "antd/es/upload";
 import { message } from "antd";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import Upload, { RcFile, UploadFile, UploadProps } from "antd/es/upload";
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useEffect, useState } from "react";
 import { db, storage } from "../configs/firebase";
+import { getDataFirebase } from "../services";
 import log from "../utils/log";
 
 interface Banner {
@@ -72,7 +72,7 @@ const useManagerBanner = () => {
 
         const imageRef = ref(storage, `banners/${file.uid}`);
         try {
-            await removeImageFirebase(imageRef);
+            await deleteObject(imageRef);
 
             // Xóa banner từ Firestore
             const bannerToDelete = banners.find((banner) => banner.uid === file.uid);

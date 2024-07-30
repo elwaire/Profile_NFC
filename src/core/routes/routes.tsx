@@ -13,6 +13,7 @@ const BannerManager = React.lazy(() => import("~/screens/Manager/BannerManager")
 
 const BlogManager = React.lazy(() => import("~/screens/Manager/BlogManager"));
 const CreateBlog = React.lazy(() => import("~/screens/Manager/BlogManager/CreateBlog"));
+const DetailBlog = React.lazy(() => import("~/screens/Manager/BlogManager/DetailBlog"));
 
 const NotFoundScreen = React.lazy(() => import("~/screens/NotFound"));
 
@@ -35,7 +36,15 @@ const router = createBrowserRouter([
                 element: <BlogManager />,
             },
             {
+                path: `${PATHS.MANAGER.BLOG.ROOT}/:id`,
+                element: <DetailBlog />,
+            },
+            {
                 path: PATHS.MANAGER.BLOG.CREATE,
+                element: <CreateBlog />,
+            },
+            {
+                path: `${PATHS.MANAGER.BLOG.EDIT}/:id`,
                 element: <CreateBlog />,
             },
             {

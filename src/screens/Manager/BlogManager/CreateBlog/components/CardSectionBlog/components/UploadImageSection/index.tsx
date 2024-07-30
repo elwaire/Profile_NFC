@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "~/core/hooks";
 import { BlogsActions } from "~/core/store";
 import { BlogSection } from "~/core/types";
 import { PlusOutlined } from "@ant-design/icons";
+import { v4 as uuidv4 } from "uuid"; // Đảm bảo bạn đã cài đặt uuid package
 
 type UploadImageSectionProps = {
     section: BlogSection;
@@ -14,9 +15,7 @@ type UploadImageSectionProps = {
 const UploadImageSection: React.FC<UploadImageSectionProps> = ({ section }) => {
     const dispatch = useAppDispatch();
     const sections = useAppSelector((state) => state.root.blogs.sections);
-    const loading = useAppSelector((state) => {
-        return state.root.blogs.loading;
-    });
+    const loading = useAppSelector((state) => state.root.blogs.loading);
 
     const handleImageUpload = async (file: File, sectionKey: string) => {
         dispatch(BlogsActions.update({ loading: true }));
@@ -24,35 +23,42 @@ const UploadImageSection: React.FC<UploadImageSectionProps> = ({ section }) => {
             const section = sections.find((s) => s.key === sectionKey);
             if (section && section.images.length >= 4) {
                 message.error("Maximum 4 images allowed per section");
-                return "";
+                return null;
             }
-            const imageRef = ref(storage, `blog_images/${file.name}`);
+
+            const uid = uuidv4(); // Tạo uid mới cho mỗi ảnh
+            const imageRef = ref(storage, `blog_images/${uid}`);
             await uploadBytes(imageRef, file);
             const imageUrl = await getDownloadURL(imageRef);
+
+            const newImage = {
+                uid,
+                url: imageUrl,
+            };
 
             dispatch(
                 BlogsActions.update({
                     sections: sections.map((section) =>
-                        section.key === sectionKey ? { ...section, images: [...section.images, imageUrl] } : section,
+                        section.key === sectionKey ? { ...section, images: [...section.images, newImage] } : section,
                     ),
                 }),
             );
-            return imageUrl;
+            return newImage;
         } catch (error) {
             console.error("Error uploading image:", error);
             message.error("Failed to upload image");
-            return "";
+            return null;
         } finally {
             dispatch(BlogsActions.update({ loading: false }));
         }
     };
 
-    const handleRemoveImage = (sectionKey: string, imageUrl: string) => {
+    const handleRemoveImage = (sectionKey: string, imageUid: string) => {
         dispatch(
             BlogsActions.update({
                 sections: sections.map((section) =>
                     section.key === sectionKey
-                        ? { ...section, images: section.images.filter((url) => url !== imageUrl) }
+                        ? { ...section, images: section.images.filter((img) => img.uid !== imageUid) }
                         : section,
                 ),
             }),
@@ -64,17 +70,17 @@ const UploadImageSection: React.FC<UploadImageSectionProps> = ({ section }) => {
             <div className="group__card_section_blog">
                 <Upload
                     listType="picture-card"
-                    fileList={section.images.map((url, index) => ({
-                        uid: `-${index}`,
-                        name: `image-${index}`,
+                    fileList={section.images.map((img) => ({
+                        uid: img.uid,
+                        name: `image-${img.uid}`,
                         status: "done",
-                        url: url,
+                        url: img.url,
                     }))}
                     beforeUpload={(file) => {
                         handleImageUpload(file, section.key);
                         return false;
                     }}
-                    onRemove={(file) => handleRemoveImage(section.key, file.url || "")}
+                    onRemove={(file) => handleRemoveImage(section.key, file.uid)}
                     disabled={loading}
                 >
                     {section.images.length < 4 && (

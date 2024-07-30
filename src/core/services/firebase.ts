@@ -1,7 +1,5 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../configs/firebase";
-import { deleteObject, StorageReference } from "firebase/storage";
-import log from "../utils/log";
 
 async function getDataFirebase(collectionName: string) {
     const collectionFirebase = collection(db, collectionName);
@@ -14,12 +12,16 @@ async function getDataFirebase(collectionName: string) {
     return fetchedData;
 }
 
-async function removeImageFirebase(imageRef: StorageReference) {
-    try {
-        await deleteObject(imageRef);
-    } catch (error) {
-        log("Error when remove image from Firebase", error);
-    }
+async function getDataFirebaseById(collectionName: string, id: string) {
+    const collectionFirebase = collection(db, collectionName);
+    const docRef = doc(collectionFirebase, id);
+    const docSnap = await getDoc(docRef);
+
+    return docSnap;
 }
 
-export { getDataFirebase , removeImageFirebase};
+
+
+
+
+export { getDataFirebase , getDataFirebaseById};

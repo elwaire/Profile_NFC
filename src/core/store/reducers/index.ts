@@ -1,2 +1,4 @@
 export * from './blogs'
 export * from './auth'
+export * from './aboutUs'
+export * from './projects'

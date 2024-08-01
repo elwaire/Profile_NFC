@@ -1,0 +1,43 @@
+.detail_project__container{
+    @apply flex flex-col gap-4 p-4 min-h-screen;
+    
+    &__wrapper{
+        @apply px-4 py-8 flex flex-col gap-8 rounded-lg shadow-default bg-white max-w-[820px] w-full mx-auto;
+    
+        &__group{
+            @apply flex flex-col gap-2 items-start;
+
+            h1{
+                @apply text-2xl font-semibold;
+            }
+        }
+
+        &__section{
+            @apply w-full flex flex-col gap-4;
+
+            &__images{
+                @apply w-full rounded-xl overflow-hidden bg-gray-400;
+
+                img{
+                    @apply w-full object-cover;
+                }
+            }
+
+            &__images_list{
+                @apply w-full grid grid-cols-2 gap-4;
+
+                img{
+                    @apply w-full object-cover rounded-xl h-[300px];
+                }
+            }
+
+            &__content{
+                @apply flex flex-col gap-4;
+
+                p{
+                    @apply text-gray-600;
+                }
+            }
+        }
+    }
+}

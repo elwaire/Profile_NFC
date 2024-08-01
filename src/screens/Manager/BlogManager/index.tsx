@@ -39,7 +39,7 @@ const BlogManager: React.FC = () => {
 
     return (
         <div className="blog_post_list__container">
-            <Title title="Blog Posts" />
+            <Title title="Blog Manager" />
             <HeadBlog handleSearch={handleSearch} />
             <TableBlog fetchPosts={fetchPosts} filteredBlogs={filteredBlogs || []} />
         </div>

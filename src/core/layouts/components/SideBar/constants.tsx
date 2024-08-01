@@ -24,7 +24,7 @@ export const DataSideBar = () => {
                     type: "group",
                     children: [
                         { key: "1", label: "Banner", onClick: () => navigate(PATHS.MANAGER.BANNER) },
-                        { key: "2", label: "Option 2" },
+                        { key: "2", label: "About us", onClick: () => navigate(PATHS.MANAGER.ABOUT_US) },
                     ],
                 },
                 {
@@ -33,7 +33,7 @@ export const DataSideBar = () => {
                     type: "group",
                     children: [
                         { key: "3", label: "Blog", onClick: () => navigate(PATHS.MANAGER.BLOG.ROOT) },
-                        { key: "4", label: "Option 4" },
+                        { key: "4", label: "Projects", onClick: () => navigate(PATHS.MANAGER.PROJECT.ROOT) },
                     ],
                 },
             ],

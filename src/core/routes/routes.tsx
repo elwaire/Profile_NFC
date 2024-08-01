@@ -15,6 +15,12 @@ const BlogManager = React.lazy(() => import("~/screens/Manager/BlogManager"));
 const CreateBlog = React.lazy(() => import("~/screens/Manager/BlogManager/CreateBlog"));
 const DetailBlog = React.lazy(() => import("~/screens/Manager/BlogManager/DetailBlog"));
 
+const ProjectsManager = React.lazy(() => import("~/screens/Manager/ProjectsManager"));
+const CreateProject = React.lazy(() => import("~/screens/Manager/ProjectsManager/CreateProject"));
+const DetailProject = React.lazy(() => import("~/screens/Manager/ProjectsManager/DetailProject"));
+
+const AboutUsManager = React.lazy(() => import("~/screens/Manager/AboutUsManager"));
+
 const NotFoundScreen = React.lazy(() => import("~/screens/NotFound"));
 
 const router = createBrowserRouter([
@@ -46,6 +52,26 @@ const router = createBrowserRouter([
             {
                 path: `${PATHS.MANAGER.BLOG.EDIT}/:id`,
                 element: <CreateBlog />,
+            },
+            {
+                path: PATHS.MANAGER.ABOUT_US,
+                element: <AboutUsManager />,
+            },
+            {
+                path: PATHS.MANAGER.PROJECT.ROOT,
+                element: <ProjectsManager />,
+            },
+            {
+                path: `${PATHS.MANAGER.PROJECT.ROOT}/:id`,
+                element: <DetailProject />,
+            },
+            {
+                path: PATHS.MANAGER.PROJECT.CREATE,
+                element: <CreateProject />,
+            },
+            {
+                path: `${PATHS.MANAGER.PROJECT.EDIT}/:id`,
+                element: <CreateProject />,
             },
             {
                 path: "*",

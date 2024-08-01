@@ -7,26 +7,26 @@ import { db } from "~/core/configs/firebase";
 import PATHS from "~/core/constants/path";
 import { useAppDispatch, useAppSelector, useCheckData } from "~/core/hooks";
 import { getDataFirebaseById } from "~/core/services";
-import { BlogsActions } from "~/core/store";
+import { ProjectsActions } from "~/core/store";
 import log from "~/core/utils/log";
-import ButtonAddSectionBlog from "./components/ButtonAddSectionBlog";
-import CardSectionBlog from "./components/CardSectionBlog";
+import ButtonAddSectionProject from "./components/ButtonAddSectionProject";
+import CardSectionBlog from "./components/CardSectionProject";
 import "./styles.scss";
 
-const CreateBlog: React.FC = () => {
+const CreateProject: React.FC = () => {
     const [form] = Form.useForm();
 
     const dispatch = useAppDispatch();
-    const { sections, loading } = useAppSelector((state) => state.root.blogs);
+    const { sections, loading } = useAppSelector((state) => state.root.projects);
 
     const { checkSnapshot } = useCheckData();
     const param = useParams();
     const navigate = useNavigate();
 
     const handleSetDataEdit = async () => {
-        dispatch(BlogsActions.update({ loading: true }));
+        dispatch(ProjectsActions.update({ loading: true }));
         try {
-            const docSnap = await getDataFirebaseById("blogs", `${param.id}`);
+            const docSnap = await getDataFirebaseById("projects", `${param.id}`);
 
             checkSnapshot(docSnap);
 
@@ -39,13 +39,13 @@ const CreateBlog: React.FC = () => {
                     contents: section.contents,
                 }));
 
-                dispatch(BlogsActions.update({ sections }));
+                dispatch(ProjectsActions.update({ sections }));
                 form.setFieldsValue({ title: data.title });
             }
         } catch (error) {
             log("error", error);
         } finally {
-            dispatch(BlogsActions.update({ loading: false }));
+            dispatch(ProjectsActions.update({ loading: false }));
         }
     };
 
@@ -56,9 +56,9 @@ const CreateBlog: React.FC = () => {
     }, [param.id]);
 
     const onFinish = async (values: any) => {
-        dispatch(BlogsActions.update({ loading: true }));
+        dispatch(ProjectsActions.update({ loading: true }));
         try {
-            const blogData = {
+            const projectsData = {
                 title: values.title,
                 sections: sections.map((section) => ({
                     images: section.images,
@@ -69,45 +69,45 @@ const CreateBlog: React.FC = () => {
 
             if (param.id) {
                 // Cập nhật bài viết hiện có
-                const blogRef = doc(db, "blogs", param.id);
+                const projectRef = doc(db, "projects", param.id);
 
-                await updateDoc(blogRef, blogData);
-                message.success("Blog post updated successfully!");
+                await updateDoc(projectRef, projectsData);
+                message.success("Project post updated successfully!");
             } else {
                 // Tạo bài viết mới
-                blogData.timeCreated = new Date().toISOString();
-                await addDoc(collection(db, "blogs"), blogData);
-                message.success("Blog post created successfully!");
+                projectsData.timeCreated = new Date().toISOString();
+                await addDoc(collection(db, "projects"), projectsData);
+                message.success("Project post created successfully!");
             }
 
             form.resetFields();
-            dispatch(BlogsActions.update({ sections: [{ key: "0", images: [], contents: [""] }] }));
-            navigate(PATHS.MANAGER.BLOG.ROOT);
+            dispatch(ProjectsActions.update({ sections: [{ key: "0", images: [], contents: [""] }] }));
+            navigate(PATHS.MANAGER.PROJECT.ROOT);
         } catch (error) {
-            console.error("Error creating blog post:", error);
-            message.error("An error occurred while creating the blog post.");
+            console.error("Error creating project post:", error);
+            message.error("An error occurred while creating the project post.");
         } finally {
-            dispatch(BlogsActions.update({ loading: false }));
+            dispatch(ProjectsActions.update({ loading: false }));
         }
     };
 
     const renderForm = useMemo(() => {
         return (
-            <div className="blog_manager__container__wrapper">
+            <div className="projects_manager__container__wrapper">
                 <Form form={form} onFinish={onFinish} layout="vertical">
                     <FormItem
                         name="title"
-                        label="Blog Title"
-                        rules={[{ required: true, message: "Please input the blog title!" }]}
+                        label="Project Title"
+                        rules={[{ required: true, message: "Please input the project title!" }]}
                     />
 
                     {sections.map((section, index) => (
                         <CardSectionBlog key={section.key} section={section} index={index} form={form} />
                     ))}
-                    <ButtonAddSectionBlog />
+                    <ButtonAddSectionProject />
                     <FormItem>
                         <Button type="primary" htmlType="submit" loading={loading}>
-                            {param.id ? "Update Blog" : "Create Blog"}
+                            {param.id ? "Update Project" : "Create Project"}
                         </Button>
                     </FormItem>
                 </Form>
@@ -116,11 +116,11 @@ const CreateBlog: React.FC = () => {
     }, [form, sections, loading]);
 
     return (
-        <div className="blog_manager__container">
-            <Title title="Blog Manager" backPage />
+        <div className="projects_manager__container">
+            <Title title="Project Manager" backPage />
             {renderForm}
         </div>
     );
 };
 
-export default CreateBlog;
+export default CreateProject;

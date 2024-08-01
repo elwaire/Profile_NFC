@@ -1,0 +1,11 @@
+.upload_image__container{
+    @apply bg-white h-[120px] p-2 gap-2 flex rounded-lg shadow-md border border-gray-100 overflow-hidden;
+
+    img{
+        @apply w-full h-full object-cover rounded-lg;
+    }
+
+    &__btn{
+        @apply   w-full h-full;
+    }
+}

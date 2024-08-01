@@ -1,0 +1,7 @@
+.projects_manager__container{
+    @apply p-4 flex flex-col gap-4 min-h-screen;
+
+    &__wrapper{
+        @apply bg-white;
+    }
+}

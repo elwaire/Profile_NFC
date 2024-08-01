@@ -1,0 +1,16 @@
+.about_us_manager__container{
+    @apply p-4 flex flex-col  items-start justify-start min-h-screen;
+
+    &__wrapper{
+        @apply w-full flex flex-col;
+
+        &__section{
+
+            h1{
+                @apply mb-2;
+            }
+
+            @apply border-y border-gray-100 pt-4 mb-4;
+        }
+    }
+}

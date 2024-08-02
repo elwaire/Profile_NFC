@@ -6,6 +6,7 @@ import AuthReducer from './reducers/auth';
 import BlogsReducer from './reducers/blogs';
 import AboutUsReducer from './reducers/aboutUs';
 import ProjectsReducer from './reducers/projects';
+import TeamReducer from './reducers/team';
 
 
 
@@ -14,7 +15,7 @@ const persistConfig = {
     storage,
     timeout: 30000,
     // whitelist: [],
-    blacklist: ['blogs', 'aboutUs', 'projects'],
+    blacklist: ['blogs', 'aboutUs', 'projects', 'team'],
     stateReconciler: autoMergeLevel2,
 };
 
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     auth: AuthReducer,
     aboutUs: AboutUsReducer,
     projects: ProjectsReducer,
+    team: TeamReducer,
 });
 
 type RootState = ReturnType<typeof rootReducer>;

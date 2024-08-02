@@ -45,10 +45,10 @@ export const DataSideBar = () => {
 
         {
             key: "grp",
-            label: "Group",
+            label: "More",
             type: "group",
             children: [
-                { key: "13", label: "Option 13" },
+                { key: "13", label: "Team Manager", onClick: () => navigate(PATHS.MANAGER.TEAM.ROOT) },
                 { key: "14", label: "Option 14" },
             ],
         },

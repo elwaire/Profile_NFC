@@ -25,6 +25,8 @@ const TeamManager = React.lazy(() => import("~/screens/Manager/TeamManager"));
 const CreateMember = React.lazy(() => import("~/screens/Manager/TeamManager/CreateMember"));
 const DetailMember = React.lazy(() => import("~/screens/Manager/TeamManager/DetailMember"));
 
+const ImageManager = React.lazy(() => import("~/screens/Manager/ImageManager"));
+
 const NotFoundScreen = React.lazy(() => import("~/screens/NotFound"));
 
 const router = createBrowserRouter([
@@ -92,6 +94,10 @@ const router = createBrowserRouter([
             {
                 path: `${PATHS.MANAGER.TEAM.EDIT}/:id`,
                 element: <CreateMember />,
+            },
+            {
+                path: PATHS.MANAGER.IMAGES,
+                element: <ImageManager />,
             },
             {
                 path: "*",

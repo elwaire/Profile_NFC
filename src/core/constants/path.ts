@@ -20,6 +20,7 @@ const PATHS = {
             EDIT: '/manager/team/edit',
         },
         ABOUT_US: '/manager/about-us',
+        IMAGES: '/manager/images',
     },
 
 }

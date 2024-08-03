@@ -1,0 +1,20 @@
+.list_images__items {
+    @apply overflow-hidden flex justify-center shadow-default rounded-xl flex-col items-center;
+
+    &__folder {
+        @apply w-32;
+    }
+
+    &__image {
+        @apply w-full object-cover;
+    }
+
+    &__group {
+
+        @apply p-4 flex flex-col gap-2;
+
+        h1 {
+            @apply text-lg font-semibold text-gray-700;
+        }
+    }
+}

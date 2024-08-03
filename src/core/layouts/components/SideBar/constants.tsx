@@ -49,7 +49,7 @@ export const DataSideBar = () => {
             type: "group",
             children: [
                 { key: "13", label: "Team Manager", onClick: () => navigate(PATHS.MANAGER.TEAM.ROOT) },
-                { key: "14", label: "Option 14" },
+                { key: "14", label: "Images Manager", onClick: () => navigate(PATHS.MANAGER.IMAGES) },
             ],
         },
     ];

@@ -1,6 +1,6 @@
 import { Button, Form, message } from "antd";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FormItem, Title } from "~/core/components";
 import { db } from "~/core/configs/firebase";
@@ -49,10 +49,19 @@ const CreateBlog: React.FC = () => {
         }
     };
 
+    const resetFormAndState = useCallback(() => {
+        form.resetFields();
+        dispatch(BlogsActions.update({ sections: [{ key: "0", images: [], contents: [""] }] }));
+    }, [form, dispatch]);
+
     React.useEffect(() => {
         if (param.id) {
             handleSetDataEdit();
         }
+
+        return () => {
+            resetFormAndState();
+        };
     }, [param.id]);
 
     const onFinish = async (values: any) => {

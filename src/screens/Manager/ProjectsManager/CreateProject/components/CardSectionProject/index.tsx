@@ -2,7 +2,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Form, FormInstance, Input } from "antd";
 import React, { memo, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "~/core/hooks";
-import { BlogsActions, ProjectsActions } from "~/core/store";
+import { ProjectsActions } from "~/core/store";
 import RemoveCardSectionProject from "./components/RemoveCardSectionProject";
 import RemoveContentSectionProject from "./components/RemoveContentSectionProject";
 import UploadImageSection from "./components/UploadImageSection";
@@ -50,7 +50,7 @@ const CardSectionProject: React.FC<CardSectionProjectProps> = ({ section, index,
             <UploadImageSection section={section} />
             {section.contents.map((content, contentIndex) => (
                 <Form.Item
-                    key={`content-${section.key}-${contentIndex}`}
+                    key={`content-v1-${section.key}-${contentIndex}`}
                     name={`content-${section.key}-${contentIndex}`}
                     label={`Content ${contentIndex + 1}`}
                     rules={[{ required: true, message: "Please input the content!" }]}
@@ -70,7 +70,7 @@ const CardSectionProject: React.FC<CardSectionProjectProps> = ({ section, index,
                         disabled={loading}
                         onChange={(e) => {
                             dispatch(
-                                BlogsActions.update({
+                                ProjectsActions.update({
                                     sections: sections.map((section) =>
                                         section.key === section.key
                                             ? {

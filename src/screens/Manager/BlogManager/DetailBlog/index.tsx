@@ -49,14 +49,14 @@ const DetailBlog: React.FC = () => {
         <>
             {loading && <Loading />}
             <div className="detail_blog__container">
-                <Title title={detailBlog?.title || "------"} backPage />
+                <Title title={"Detail Blog"} backPage />
                 <div className="detail_blog__container__wrapper">
                     <div className="detail_blog__container__wrapper__group">
                         <h1>{detailBlog?.title}</h1>
                         {detailBlog?.timeCreated && <Tag color="blue">{formatTime(detailBlog?.timeCreated)}</Tag>}
                     </div>
-                    {detailBlog?.sections.map((section) => (
-                        <div key={section.key} className="detail_blog__container__wrapper__section">
+                    {detailBlog?.sections.map((section, index) => (
+                        <div key={`key-section-blog-${index}`} className="detail_blog__container__wrapper__section">
                             <div
                                 className={
                                     section.images.length === 1
@@ -64,13 +64,13 @@ const DetailBlog: React.FC = () => {
                                         : "detail_blog__container__wrapper__section__images_list"
                                 }
                             >
-                                {section.images.map((image) => (
-                                    <img src={image.url} alt="section" key={image.uid} />
+                                {section.images.map((image, index) => (
+                                    <img src={image.url} alt="section" key={`detail-blog-images-"${index}`} />
                                 ))}
                             </div>
                             <div className="detail_blog__container__wrapper__section__content">
                                 {section.contents.map((content, index) => (
-                                    <p key={`detail-blog-"${index}`}>{content}</p>
+                                    <p key={`detail-content-blog-"${index}`}>{content}</p>
                                 ))}
                             </div>
                         </div>

@@ -14,7 +14,7 @@
         @apply p-4 flex flex-col gap-2;
 
         h1 {
-            @apply text-lg font-semibold text-gray-700;
+            @apply text-lg font-semibold line-clamp-1 max-w-[200px] text-gray-700;
         }
     }
 }

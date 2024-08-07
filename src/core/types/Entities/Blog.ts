@@ -1,6 +1,7 @@
 export interface BlogPost {
     id: string;
     title: string;
+    tags: string;
     sections: BlogSection[];
     timeCreated: string;
 }

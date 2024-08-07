@@ -15,7 +15,7 @@ const TableProject: React.FC<TableProjectProps> = ({ fetchPosts, filteredProject
     return (
         <div className="projects_post_list__container__wrapper">
             <Table
-                columns={renderCloumns({ fetchPosts })}
+                columns={renderCloumns({ fetchPosts }) as any}
                 dataSource={filteredProjects || []}
                 rowKey="id"
                 loading={loading}

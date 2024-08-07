@@ -1,0 +1,8 @@
+
+.list_nav_link__container{
+    @apply flex flex-col gap-2;
+
+    &_items {
+        @apply bg-gray-100 p-2 rounded-lg w-full flex justify-between items-center;
+    }
+}

@@ -34,13 +34,23 @@ const CreateProject: React.FC = () => {
                 const data = docSnap.data();
 
                 const sections = data.sections.map((section: any, index: number) => ({
-                    key: index.toString(),
-                    images: section.images,
-                    contents: section.contents,
+                    key: `edit-${index}`, // Sử dụng một key duy nhất
+                    images: section.images || [],
+                    contents: section.contents || [""],
                 }));
 
                 dispatch(ProjectsActions.update({ sections }));
-                form.setFieldsValue({ title: data.title });
+                form.setFieldsValue({
+                    title: data.title,
+                    description: data.description,
+                    link: data.link,
+                    ...sections.reduce((acc: any, section: any) => {
+                        section.contents.forEach((content: any, contentIndex: any) => {
+                            acc[`content-${section.key}-${contentIndex}`] = content;
+                        });
+                        return acc;
+                    }, {}),
+                });
             }
         } catch (error) {
             log("error", error);
@@ -64,40 +74,45 @@ const CreateProject: React.FC = () => {
         };
     }, [param.id]);
 
-    const onFinish = async (values: any) => {
-        dispatch(ProjectsActions.update({ loading: true }));
-        try {
-            const projectsData = {
-                title: values.title,
-                sections: sections.map((section) => ({
-                    images: section.images,
-                    contents: section.contents.filter((content) => content.trim() !== ""),
-                })),
-                timeCreated: new Date().toISOString(),
-            };
+    const onFinish = useCallback(
+        async (values: any) => {
+            dispatch(ProjectsActions.update({ loading: true }));
+            try {
+                const projectsData = {
+                    title: values.title,
+                    description: values.description,
+                    link: values.link,
+                    sections: sections.map((section) => ({
+                        images: section.images,
+                        contents: section.contents.filter((content) => content.trim() !== ""),
+                    })),
+                    timeCreated: new Date().toISOString(),
+                };
 
-            if (param.id) {
-                const projectRef = doc(db, "projects", param.id);
+                if (param.id) {
+                    const projectRef = doc(db, "projects", param.id);
 
-                await updateDoc(projectRef, projectsData);
-                message.success("Project post updated successfully!");
-            } else {
-                // Tạo bài viết mới
-                projectsData.timeCreated = new Date().toISOString();
-                await addDoc(collection(db, "projects"), projectsData);
-                message.success("Project post created successfully!");
+                    await updateDoc(projectRef, projectsData);
+                    message.success("Project post updated successfully!");
+                } else {
+                    // Tạo bài viết mới
+                    projectsData.timeCreated = new Date().toISOString();
+                    await addDoc(collection(db, "projects"), projectsData);
+                    message.success("Project post created successfully!");
+                }
+
+                form.resetFields();
+                dispatch(ProjectsActions.update({ sections: [{ key: "0", images: [], contents: [""] }] }));
+                navigate(PATHS.MANAGER.PROJECT.ROOT);
+            } catch (error) {
+                console.error("Error creating project post:", error);
+                message.error("An error occurred while creating the project post.");
+            } finally {
+                dispatch(ProjectsActions.update({ loading: false }));
             }
-
-            form.resetFields();
-            dispatch(ProjectsActions.update({ sections: [{ key: "0", images: [], contents: [""] }] }));
-            navigate(PATHS.MANAGER.PROJECT.ROOT);
-        } catch (error) {
-            console.error("Error creating project post:", error);
-            message.error("An error occurred while creating the project post.");
-        } finally {
-            dispatch(ProjectsActions.update({ loading: false }));
-        }
-    };
+        },
+        [sections],
+    );
 
     const renderForm = useMemo(() => {
         return (
@@ -107,6 +122,18 @@ const CreateProject: React.FC = () => {
                         name="title"
                         label="Project Title"
                         rules={[{ required: true, message: "Please input the project title!" }]}
+                    />
+
+                    <FormItem
+                        name="description"
+                        label="Project Description"
+                        rules={[{ required: true, message: "Please input the project description!" }]}
+                    />
+
+                    <FormItem
+                        name="link"
+                        label="Project Link"
+                        rules={[{ required: true, message: "Please input the project link!" }]}
                     />
 
                     {sections.map((section, index) => (

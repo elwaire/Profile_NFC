@@ -1,4 +1,4 @@
-import { Button, Form, message } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import React, { useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -34,13 +34,22 @@ const CreateBlog: React.FC = () => {
                 const data = docSnap.data();
 
                 const sections = data.sections.map((section: any, index: number) => ({
-                    key: index.toString(),
-                    images: section.images,
-                    contents: section.contents,
+                    key: `edit-${index}`, // Sử dụng một key duy nhất
+                    images: section.images || [],
+                    contents: section.contents || [""],
                 }));
 
                 dispatch(BlogsActions.update({ sections }));
-                form.setFieldsValue({ title: data.title });
+                form.setFieldsValue({
+                    title: data.title,
+                    tags: data.tags,
+                    ...sections.reduce((acc: any, section: any) => {
+                        section.contents.forEach((content: any, contentIndex: any) => {
+                            acc[`content-${section.key}-${contentIndex}`] = content;
+                        });
+                        return acc;
+                    }, {}),
+                });
             }
         } catch (error) {
             log("error", error);
@@ -69,6 +78,7 @@ const CreateBlog: React.FC = () => {
         try {
             const blogData = {
                 title: values.title,
+                tags: values.tags,
                 sections: sections.map((section) => ({
                     images: section.images,
                     contents: section.contents.filter((content) => content.trim() !== ""),
@@ -77,13 +87,10 @@ const CreateBlog: React.FC = () => {
             };
 
             if (param.id) {
-                // Cập nhật bài viết hiện có
                 const blogRef = doc(db, "blogs", param.id);
-
                 await updateDoc(blogRef, blogData);
                 message.success("Blog post updated successfully!");
             } else {
-                // Tạo bài viết mới
                 blogData.timeCreated = new Date().toISOString();
                 await addDoc(collection(db, "blogs"), blogData);
                 message.success("Blog post created successfully!");
@@ -109,6 +116,14 @@ const CreateBlog: React.FC = () => {
                         label="Blog Title"
                         rules={[{ required: true, message: "Please input the blog title!" }]}
                     />
+
+                    <FormItem
+                        name="tags"
+                        label="Tags"
+                        rules={[{ required: true, message: "Please input the blog tags!" }]}
+                    >
+                        <Input placeholder="Tags" defaultValue={"not-tag"} />
+                    </FormItem>
 
                     {sections.map((section, index) => (
                         <CardSectionBlog key={section.key} section={section} index={index} form={form} />

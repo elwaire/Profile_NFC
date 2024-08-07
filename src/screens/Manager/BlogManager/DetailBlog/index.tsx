@@ -53,6 +53,7 @@ const DetailBlog: React.FC = () => {
                 <div className="detail_blog__container__wrapper">
                     <div className="detail_blog__container__wrapper__group">
                         <h1>{detailBlog?.title}</h1>
+                        <Tag color="blue">{detailBlog?.tags}</Tag>
                         {detailBlog?.timeCreated && <Tag color="blue">{formatTime(detailBlog?.timeCreated)}</Tag>}
                     </div>
                     {detailBlog?.sections.map((section, index) => (

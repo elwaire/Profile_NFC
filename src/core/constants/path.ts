@@ -1,6 +1,7 @@
 const PATHS = {
     HOME: '/',
     SIGN_IN: '/sign-in',  
+    SETTINGS: '/settings',
     
     MANAGER: {
         BANNER: '/manager/banner',
@@ -21,6 +22,7 @@ const PATHS = {
         },
         ABOUT_US: '/manager/about-us',
         IMAGES: '/manager/images',
+        HOME_FORUM: '/manager/home-forum',
     },
 
 }

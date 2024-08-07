@@ -5,6 +5,7 @@ import { MainLayout } from "../layouts";
 import React from "react";
 
 const HomeScreen = React.lazy(() => import("~/screens/Home"));
+const HomeForumManagerScreen = React.lazy(() => import("~/screens/Manager/HomeForumManager"));
 
 const SignInScreen = React.lazy(() => import("~/screens/SignIn"));
 
@@ -26,6 +27,7 @@ const CreateMember = React.lazy(() => import("~/screens/Manager/TeamManager/Crea
 const DetailMember = React.lazy(() => import("~/screens/Manager/TeamManager/DetailMember"));
 
 const ImageManager = React.lazy(() => import("~/screens/Manager/ImageManager"));
+const SettingsScreen = React.lazy(() => import("~/screens/Settings"));
 
 const NotFoundScreen = React.lazy(() => import("~/screens/NotFound"));
 
@@ -98,6 +100,14 @@ const router = createBrowserRouter([
             {
                 path: PATHS.MANAGER.IMAGES,
                 element: <ImageManager />,
+            },
+            {
+                path: PATHS.SETTINGS,
+                element: <SettingsScreen />,
+            },
+            {
+                path: PATHS.MANAGER.HOME_FORUM,
+                element: <HomeForumManagerScreen />,
             },
             {
                 path: "*",

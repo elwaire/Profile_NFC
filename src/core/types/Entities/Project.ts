@@ -1,6 +1,8 @@
 export interface ProjectPost {
     id: string;
     title: string;
+    description: string;
+    link: string;
     sections: ProjectSection[];
     timeCreated: string;
 }

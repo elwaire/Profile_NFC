@@ -2,7 +2,7 @@ import { Loading, Title } from "~/core/components";
 
 import { Tag } from "antd";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector, useCheckData } from "~/core/hooks";
 import { getDataFirebaseById } from "~/core/services";
 import { ProjectsActions } from "~/core/store";
@@ -53,6 +53,10 @@ const DetailProject: React.FC = () => {
                 <div className="detail_project__container__wrapper">
                     <div className="detail_project__container__wrapper__group">
                         <h1>{detailProject?.title}</h1>
+                        <p>{detailProject?.description || ""}</p>
+                        <Link to={detailProject?.link || ""} target="_blank">
+                            {detailProject?.link}
+                        </Link>
                         {detailProject?.timeCreated && <Tag color="blue">{formatTime(detailProject?.timeCreated)}</Tag>}
                     </div>
                     {detailProject?.sections.map((section) => (

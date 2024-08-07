@@ -47,7 +47,7 @@ const renderCloumns = ({ fetchPosts }: renderCloumnsProps) => {
                     <Link to={`${PATHS.MANAGER.PROJECT.EDIT}/${record.id}`}>
                         <Button icon={<EditOutlined />}>Edit</Button>
                     </Link>
-                    <DeleteProject refetchPosts={fetchPosts} data={record} />
+                    <DeleteProject refetchPosts={fetchPosts} data={record as any} />
                 </Space>
             ),
         },

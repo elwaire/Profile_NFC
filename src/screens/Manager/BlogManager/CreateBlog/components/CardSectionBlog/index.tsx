@@ -26,18 +26,38 @@ const CardSectionBlog: React.FC<CardSectionBlogProps> = ({ section, index, form 
         (sectionKey: string) => {
             dispatch(
                 BlogsActions.update({
-                    sections: sections.map((section) =>
-                        section.key === sectionKey
+                    sections: sections.map((sec) =>
+                        sec.key === sectionKey
                             ? {
-                                  ...section,
-                                  contents: [...section.contents, ""],
+                                  ...sec,
+                                  contents: [...sec.contents, ""],
                               }
-                            : section,
+                            : sec,
                     ),
                 }),
             );
         },
-        [sections],
+        [sections, dispatch],
+    );
+
+    const handleContentChange = useCallback(
+        (sectionKey: string, contentIndex: number, newContent: string) => {
+            dispatch(
+                BlogsActions.update({
+                    sections: sections.map((sec) =>
+                        sec.key === sectionKey
+                            ? {
+                                  ...sec,
+                                  contents: sec.contents.map((content, idx) =>
+                                      idx === contentIndex ? newContent : content,
+                                  ),
+                              }
+                            : sec,
+                    ),
+                }),
+            );
+        },
+        [sections, dispatch],
     );
 
     return (
@@ -48,13 +68,12 @@ const CardSectionBlog: React.FC<CardSectionBlogProps> = ({ section, index, form 
             style={{ marginBottom: 16 }}
         >
             <UploadImageSection section={section} />
-            {section.contents.map((content, contentIndex) => (
+            {section.contents.map((_, contentIndex) => (
                 <Form.Item
                     key={`content-${section.key}-${contentIndex}`}
                     name={`content-${section.key}-${contentIndex}`}
                     label={`Content ${contentIndex + 1}`}
                     rules={[{ required: true, message: "Please input the content!" }]}
-                    initialValue={content}
                     extra={
                         contentIndex > 0 && (
                             <RemoveContentSectionBlog
@@ -68,22 +87,7 @@ const CardSectionBlog: React.FC<CardSectionBlogProps> = ({ section, index, form 
                     <Input.TextArea
                         rows={4}
                         disabled={loading}
-                        onChange={(e) => {
-                            dispatch(
-                                BlogsActions.update({
-                                    sections: sections.map((section) =>
-                                        section.key === section.key
-                                            ? {
-                                                  ...section,
-                                                  contents: section.contents.map((c, i) =>
-                                                      i === contentIndex ? e.target.value : c,
-                                                  ),
-                                              }
-                                            : section,
-                                    ),
-                                }),
-                            );
-                        }}
+                        onChange={(e) => handleContentChange(section.key, contentIndex, e.target.value)}
                     />
                 </Form.Item>
             ))}

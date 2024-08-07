@@ -12,7 +12,7 @@ export const DataSideBar = () => {
         {
             type: "divider",
         },
-
+        { key: "home-forum", label: "Home Forum Manager", onClick: () => navigate(PATHS.MANAGER.HOME_FORUM) },
         {
             key: "sub1",
             label: "Manage information",
@@ -50,6 +50,7 @@ export const DataSideBar = () => {
             children: [
                 { key: "13", label: "Team Manager", onClick: () => navigate(PATHS.MANAGER.TEAM.ROOT) },
                 { key: "14", label: "Images Manager", onClick: () => navigate(PATHS.MANAGER.IMAGES) },
+                { key: "15", label: "Settings", onClick: () => navigate(PATHS.SETTINGS) },
             ],
         },
     ];

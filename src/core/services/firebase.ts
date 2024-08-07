@@ -24,4 +24,5 @@ async function getDataFirebaseById(collectionName: string, id: string) {
 
 
 
+
 export { getDataFirebase , getDataFirebaseById};

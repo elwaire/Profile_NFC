@@ -86,7 +86,6 @@ const SignInScreen: React.FC = () => {
                             { required: true, message: `${t("signin.email-required")}` },
                             { type: "email", message: `${t("signin.email-email")}` },
                         ]}
-                        initialValue={"minull1810@gmail.com"}
                     >
                         <Input prefix={<UserOutlined />} placeholder="Email" disabled={SignInLoading} />
                     </Form.Item>
@@ -96,7 +95,6 @@ const SignInScreen: React.FC = () => {
                             { required: true, message: `${t("signin.password-required")}` },
                             { min: 6, message: `${t("signin.passowrd-max-length")}` },
                         ]}
-                        initialValue={"123456"}
                     >
                         <Input.Password
                             prefix={<LockOutlined />}

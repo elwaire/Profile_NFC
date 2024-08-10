@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../configs/firebase";
 
 async function getDataFirebase(collectionName: string) {
@@ -21,8 +21,14 @@ async function getDataFirebaseById(collectionName: string, id: string) {
 }
 
 
+async function deleteDocument(collectionName: string, id: string) {
+    const collectionFirebase = collection(db, collectionName);
+    const docRef = doc(collectionFirebase, id);
+    await deleteDoc(docRef);
+}
 
 
 
 
-export { getDataFirebase , getDataFirebaseById};
+
+export { getDataFirebase , getDataFirebaseById, deleteDocument};

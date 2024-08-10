@@ -1,0 +1,7 @@
+.table__subcriptions{
+    @apply flex-1 bg-white shadow-default p-4 rounded-lg flex flex-col gap-4;
+
+    h1{
+        @apply text-lg font-bold text-primary;
+    }
+}

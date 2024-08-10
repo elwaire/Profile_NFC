@@ -12,7 +12,8 @@ export const DataSideBar = () => {
         {
             type: "divider",
         },
-        { key: "home-forum", label: "Home Forum Manager", onClick: () => navigate(PATHS.MANAGER.HOME_FORUM) },
+        { key: "home", label: "Dashboard", onClick: () => navigate(PATHS.HOME) },
+        // { key: "home-forum", label: "Home Forum Manager", onClick: () => navigate(PATHS.MANAGER.HOME_FORUM) },
         {
             key: "sub1",
             label: "Manage information",

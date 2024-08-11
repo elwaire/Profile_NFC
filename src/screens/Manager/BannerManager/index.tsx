@@ -18,7 +18,7 @@ const BannerManager: React.FC = () => {
                             <img src={banner.imageUrl} alt={banner.uid} />
                             {banner.link ? (
                                 <Link to={banner.link} target="_blank">
-                                    <p>{banner.link}</p>
+                                    <p>Link</p>
                                 </Link>
                             ) : (
                                 <p>------</p>

@@ -1,4 +1,4 @@
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input, message, Select } from "antd";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import React, { useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,6 +12,7 @@ import log from "~/core/utils/log";
 import ButtonAddSectionBlog from "./components/ButtonAddSectionBlog";
 import CardSectionBlog from "./components/CardSectionBlog";
 import "./styles.scss";
+import { Option } from "antd/es/mentions";
 
 const CreateBlog: React.FC = () => {
     const [form] = Form.useForm();
@@ -43,6 +44,7 @@ const CreateBlog: React.FC = () => {
                 form.setFieldsValue({
                     title: data.title,
                     tags: data.tags,
+                    status: data.status || "new",
                     ...sections.reduce((acc: any, section: any) => {
                         section.contents.forEach((content: any, contentIndex: any) => {
                             acc[`content-${section.key}-${contentIndex}`] = content;
@@ -66,6 +68,8 @@ const CreateBlog: React.FC = () => {
     React.useEffect(() => {
         if (param.id) {
             handleSetDataEdit();
+        } else {
+            form.setFieldsValue({ status: "new" });
         }
 
         return () => {
@@ -79,20 +83,25 @@ const CreateBlog: React.FC = () => {
             const blogData = {
                 title: values.title,
                 tags: values.tags,
+                status: values.status,
                 sections: sections.map((section) => ({
                     images: section.images,
                     contents: section.contents.filter((content) => content.trim() !== ""),
                 })),
-                timeCreated: new Date().toISOString(),
             };
 
             if (param.id) {
                 const blogRef = doc(db, "blogs", param.id);
-                await updateDoc(blogRef, blogData);
+                await updateDoc(blogRef, {
+                    ...blogData,
+                    timeUpdated: new Date().toISOString(),
+                });
                 message.success("Blog post updated successfully!");
             } else {
-                blogData.timeCreated = new Date().toISOString();
-                await addDoc(collection(db, "blogs"), blogData);
+                await addDoc(collection(db, "blogs"), {
+                    ...blogData,
+                    timeCreated: new Date().toISOString(),
+                });
                 message.success("Blog post created successfully!");
             }
 
@@ -123,6 +132,19 @@ const CreateBlog: React.FC = () => {
                         rules={[{ required: true, message: "Please input the blog tags!" }]}
                     >
                         <Input placeholder="Tags" defaultValue={"not-tag"} />
+                    </FormItem>
+
+                    <FormItem
+                        name="status"
+                        label="Status"
+                        rules={[{ required: true, message: "Please select the blog status!" }]}
+                    >
+                        <Select placeholder="Select blog status">
+                            <Option value="new">New</Option>
+                            <Option value="popular">Popular</Option>
+                            <Option value="featured">Featured</Option>
+                            <Option value="archived">Archived</Option>
+                        </Select>
                     </FormItem>
 
                     {sections.map((section, index) => (

@@ -142,8 +142,7 @@ const CreateBlog: React.FC = () => {
                         <Select placeholder="Select blog status">
                             <Option value="new">New</Option>
                             <Option value="popular">Popular</Option>
-                            <Option value="featured">Featured</Option>
-                            <Option value="archived">Archived</Option>
+                            <Option value="trending">trending</Option>
                         </Select>
                     </FormItem>
 

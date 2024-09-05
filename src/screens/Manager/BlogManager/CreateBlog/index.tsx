@@ -1,4 +1,5 @@
-import { Button, Form, Input, message, Select } from "antd";
+import { Button, Form, message, Select } from "antd";
+import { Option } from "antd/es/mentions";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import React, { useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,7 +13,6 @@ import log from "~/core/utils/log";
 import ButtonAddSectionBlog from "./components/ButtonAddSectionBlog";
 import CardSectionBlog from "./components/CardSectionBlog";
 import "./styles.scss";
-import { Option } from "antd/es/mentions";
 
 const CreateBlog: React.FC = () => {
     const [form] = Form.useForm();

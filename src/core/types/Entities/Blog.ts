@@ -1,7 +1,7 @@
 export interface BlogPost {
     id: string;
     title: string;
-    tags: string;
+    tags: 'blog' | 'learn-about' | 'work' | 'introduce' | 'goals' | 'life' ;
     sections: BlogSection[];
     timeCreated: string;
 }

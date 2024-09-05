@@ -69,7 +69,7 @@ const CreateBlog: React.FC = () => {
         if (param.id) {
             handleSetDataEdit();
         } else {
-            form.setFieldsValue({ status: "new" });
+            form.setFieldsValue({ status: "new", tags: "blog" });
         }
 
         return () => {
@@ -129,9 +129,17 @@ const CreateBlog: React.FC = () => {
                     <FormItem
                         name="tags"
                         label="Tags"
-                        rules={[{ required: true, message: "Please input the blog tags!" }]}
+                        rules={[{ required: true, message: "Please select the blog tags!" }]}
+                        initialValue="blog"
                     >
-                        <Input placeholder="Tags" defaultValue={"not-tag"} />
+                        <Select placeholder="Select blog tags">
+                            <Option value="blog">Blog</Option>
+                            <Option value="learn-about">Learn About</Option>
+                            <Option value="work">Work</Option>
+                            <Option value="introduce">Introduce</Option>
+                            <Option value="goals">Goals</Option>
+                            <Option value="life">Life</Option>
+                        </Select>
                     </FormItem>
 
                     <FormItem

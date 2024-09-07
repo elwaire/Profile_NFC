@@ -2,6 +2,7 @@ import { Tabs } from "antd";
 import "./styles.scss";
 import { useMemo } from "react";
 import HeaderSetting from "./components/HeaderSetting";
+import InformationDetailBar from "./components/InformationDetailBar";
 
 const SettingsScreen: React.FC = () => {
     const items = useMemo(() => {
@@ -13,8 +14,8 @@ const SettingsScreen: React.FC = () => {
             },
             {
                 key: "2",
-                label: "Tab 2",
-                children: "Content of Tab 2",
+                label: "Information Detail Bar",
+                children: <InformationDetailBar />,
             },
             {
                 key: "3",

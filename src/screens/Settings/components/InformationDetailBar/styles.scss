@@ -1,0 +1,7 @@
+.item-information-detail-container{
+    @apply flex flex-col gap-4;
+
+    img {
+        @apply h-[200px] w-[200px] object-cover;
+    }
+}

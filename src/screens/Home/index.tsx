@@ -1,7 +1,7 @@
-import { transitionPage } from "~/core/hoc";
-import "./styles.scss";
 import { Title } from "~/core/components";
+import { transitionPage } from "~/core/hoc";
 import TableSubcriptions from "./components/TableSubcriptions";
+import "./styles.scss";
 import Statisticals from "./components/Statisticals";
 
 const HomeScreen: React.FC = () => {

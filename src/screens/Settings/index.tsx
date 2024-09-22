@@ -3,6 +3,7 @@ import "./styles.scss";
 import { useMemo } from "react";
 import HeaderSetting from "./components/HeaderSetting";
 import InformationDetailBar from "./components/InformationDetailBar";
+import NotificationWeb from "./components/NotificationWeb";
 
 const SettingsScreen: React.FC = () => {
     const items = useMemo(() => {
@@ -19,8 +20,8 @@ const SettingsScreen: React.FC = () => {
             },
             {
                 key: "3",
-                label: "Tab 3",
-                children: "Content of Tab 3",
+                label: "Notification Web",
+                children: <NotificationWeb />,
             },
         ];
     }, []);

@@ -173,7 +173,7 @@ const CreateProject: React.FC = () => {
                     <FormItem
                         name="myRole"
                         label="My Role"
-                        rules={[{ required: true, message: "Please input the project my role!" }]}
+                        rules={[{ required: true, message: "Please input the project my Role!" }]}
                     />
 
                     {sections.map((section, index) => (

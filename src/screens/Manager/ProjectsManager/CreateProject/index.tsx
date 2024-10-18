@@ -43,6 +43,11 @@ const CreateProject: React.FC = () => {
                 form.setFieldsValue({
                     title: data.title,
                     description: data.description,
+                    inroductionRole: data.introduceRole,
+                    problem: data.problem,
+                    timeLine: data.timeLine,
+                    platform: data.platform,
+                    myRole: data.myRole,
                     link: data.link,
                     ...sections.reduce((acc: any, section: any) => {
                         section.contents.forEach((content: any, contentIndex: any) => {
@@ -81,7 +86,12 @@ const CreateProject: React.FC = () => {
                 const projectsData = {
                     title: values.title,
                     description: values.description,
+                    introduceRole: values.inroductionRole,
+                    problem: values.problem,
                     link: values.link,
+                    timeLine: values.timeLine,
+                    platform: values.platform,
+                    myRole: values.myRole,
                     sections: sections.map((section) => ({
                         images: section.images,
                         contents: section.contents.filter((content) => content.trim() !== ""),
@@ -131,9 +141,39 @@ const CreateProject: React.FC = () => {
                     />
 
                     <FormItem
+                        name="inroductionRole"
+                        label="Introduction Role"
+                        rules={[{ required: true, message: "Please input the project introduce role!" }]}
+                    />
+
+                    <FormItem
+                        name="problem"
+                        label="Problem"
+                        rules={[{ required: true, message: "Please input the project problem!" }]}
+                    />
+
+                    <FormItem
                         name="link"
                         label="Project Link"
                         rules={[{ required: true, message: "Please input the project link!" }]}
+                    />
+
+                    <FormItem
+                        name="timeLine"
+                        label="Time Line"
+                        rules={[{ required: true, message: "Please input the project time line!" }]}
+                    />
+
+                    <FormItem
+                        name="platform"
+                        label="Plat Form"
+                        rules={[{ required: true, message: "Please input the project platform!" }]}
+                    />
+
+                    <FormItem
+                        name="myRole"
+                        label="My Role"
+                        rules={[{ required: true, message: "Please input the project my role!" }]}
                     />
 
                     {sections.map((section, index) => (

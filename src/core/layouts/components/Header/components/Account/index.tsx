@@ -42,7 +42,7 @@ const Account: React.FC = () => {
             <div className="account__container">
                 <div className="account__container__group">
                     <h1>{user?.displayName || "Admin"}</h1>
-                    <p>{user?.email || "------"}</p>
+                    <p>{user?.email || "-------"}</p>
                 </div>
                 <Avatar src="https://i.pinimg.com/736x/9e/cb/7d/9ecb7df08d34ff2c15b339605127c7dd.jpg" />
             </div>

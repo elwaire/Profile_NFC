@@ -9,6 +9,7 @@ type TableContactsProps = {
 };
 
 const TableContacts: React.FC<TableContactsProps> = ({ data, loading }) => {
+
     return (
         <div className="">
             <Table columns={renderColumns} dataSource={data} loading={loading} />

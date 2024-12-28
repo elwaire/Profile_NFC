@@ -1,4 +1,4 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+    import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { transitionPage } from "~/core/hoc";
@@ -35,7 +35,8 @@ const SignInScreen: React.FC = () => {
             }),
         );
         try {
-            const user = await signInWithEmailAndPassword(auth, values.email, values.password);
+            const email = `${values.email}@gmail.com`
+            const user = await signInWithEmailAndPassword(auth, email, values.password);
 
             if (user.user) {
                 const payload = {
@@ -84,10 +85,9 @@ const SignInScreen: React.FC = () => {
                         name="email"
                         rules={[
                             { required: true, message: `${t("signin.email-required")}` },
-                            { type: "email", message: `${t("signin.email-email")}` },
                         ]}
                     >
-                        <Input prefix={<UserOutlined />} placeholder="Email" disabled={SignInLoading} />
+                        <Input prefix={<UserOutlined />} placeholder="Username" disabled={SignInLoading} />
                     </Form.Item>
                     <Form.Item
                         name="password"

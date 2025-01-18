@@ -9,6 +9,7 @@ import ProjectsReducer from './reducers/projects';
 import TeamReducer from './reducers/team';
 import ImagesReducer from './reducers/images';
 import SettingsReducer from './reducers/settings';
+import ResourcesReducer from './reducers/resources';
 
 
 
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
     team: TeamReducer,
     images: ImagesReducer,
     settings: SettingsReducer,
+    resources: ResourcesReducer,
 });
 
 type RootState = ReturnType<typeof rootReducer>;

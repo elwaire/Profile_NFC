@@ -20,6 +20,11 @@ const PATHS = {
             CREATE: '/manager/team/create',
             EDIT: '/manager/team/edit',
         },
+        RESOURCE: {
+            ROOT: '/manager/resource',
+            CREATE: '/manager/resource/create',
+            EDIT: '/manager/resource/edit',
+        },
         ABOUT_US: '/manager/about-us',
         IMAGES: '/manager/images',
         HOME_FORUM: '/manager/home-forum',

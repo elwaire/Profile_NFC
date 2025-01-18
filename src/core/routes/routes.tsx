@@ -26,6 +26,10 @@ const TeamManager = React.lazy(() => import("~/screens/Manager/TeamManager"));
 const CreateMember = React.lazy(() => import("~/screens/Manager/TeamManager/CreateMember"));
 const DetailMember = React.lazy(() => import("~/screens/Manager/TeamManager/DetailMember"));
 
+const ResourceManager = React.lazy(() => import("~/screens/Manager/ResourceManager"));
+const CreateResources = React.lazy(() => import("~/screens/Manager/ResourceManager/CreateResources"));
+const EditResources = React.lazy(() => import("~/screens/Manager/ResourceManager/EditResources"));
+
 const ImageManager = React.lazy(() => import("~/screens/Manager/ImageManager"));
 const SettingsScreen = React.lazy(() => import("~/screens/Settings"));
 
@@ -96,6 +100,18 @@ const router = createBrowserRouter([
             {
                 path: `${PATHS.MANAGER.TEAM.EDIT}/:id`,
                 element: <CreateMember />,
+            },
+            {
+                path: PATHS.MANAGER.RESOURCE.ROOT,
+                element: <ResourceManager />,
+            },
+            {
+                path: PATHS.MANAGER.RESOURCE.CREATE,
+                element: <CreateResources />,
+            },
+            {
+                path: `${PATHS.MANAGER.RESOURCE.ROOT}/:id`,
+                element: <EditResources />,
             },
             {
                 path: PATHS.MANAGER.IMAGES,

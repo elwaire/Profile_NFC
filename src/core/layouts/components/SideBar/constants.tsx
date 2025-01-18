@@ -35,6 +35,7 @@ export const DataSideBar = () => {
                     children: [
                         { key: "3", label: "Blog", onClick: () => navigate(PATHS.MANAGER.BLOG.ROOT) },
                         { key: "4", label: "Projects", onClick: () => navigate(PATHS.MANAGER.PROJECT.ROOT) },
+                        { key: "5", label: "Resources", onClick: () => navigate(PATHS.MANAGER.RESOURCE.ROOT) },
                     ],
                 },
             ],

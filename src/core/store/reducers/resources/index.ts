@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Resource, ResourcesState } from './types';
+import { ResourcesState } from './types';
 
 
 const initialState: ResourcesState = {

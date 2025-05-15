@@ -1,7 +1,0 @@
-.blog_post_list__container{
-    @apply flex flex-col gap-4 p-4 min-h-screen;
-
-    &__create{
-        @apply w-full flex justify-end;
-    }
-}

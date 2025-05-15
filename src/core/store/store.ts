@@ -3,13 +3,6 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, pers
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 import AuthReducer from './reducers/auth';
-import BlogsReducer from './reducers/blogs';
-import AboutUsReducer from './reducers/aboutUs';
-import ProjectsReducer from './reducers/projects';
-import TeamReducer from './reducers/team';
-import ImagesReducer from './reducers/images';
-import SettingsReducer from './reducers/settings';
-import ResourcesReducer from './reducers/resources';
 
 
 
@@ -18,19 +11,13 @@ const persistConfig = {
     storage,
     timeout: 30000,
     // whitelist: [],
-    blacklist: ['blogs', 'aboutUs', 'projects', 'team'],
+    blacklist: [],
     stateReconciler: autoMergeLevel2,
 };
 
 const rootReducer = combineReducers({
-    blogs : BlogsReducer,
     auth: AuthReducer,
-    aboutUs: AboutUsReducer,
-    projects: ProjectsReducer,
-    team: TeamReducer,
-    images: ImagesReducer,
-    settings: SettingsReducer,
-    resources: ResourcesReducer,
+ 
 });
 
 type RootState = ReturnType<typeof rootReducer>;

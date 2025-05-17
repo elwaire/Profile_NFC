@@ -1,30 +1,80 @@
 import { transitionPage } from "~/core/hoc";
 import "./styles.scss";
-import fakeData from "~/core/utils/fakeData";
 import ItemSocialMedia from "./components/ItemSocialMedia";
+import { useParams } from "react-router-dom";
+import { getDataFirebaseById } from "~/core/services";
+import { useEffect, useState } from "react";
+import { message, Spin } from "antd";
+
+type dataDetail = {
+    id: string;
+    avatarUrl: string;
+    bannerUrl: string;
+    description: string;
+    links: {
+        image: string;
+        title: string;
+        url: string;
+    }[];
+    name: string;
+};
 
 const HomeScreen: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
+    const [data, setData] = useState<dataDetail | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        if (!id) return;
+
+        let isMounted = true;
+
+        const fetchData = async () => {
+            try {
+                const docSnap = await getDataFirebaseById("items", id);
+                if (docSnap.exists() && isMounted) {
+                    const data = docSnap.data();
+                    setData({ id: docSnap.id, ...(data as Omit<dataDetail, "id">) });
+                } else {
+                    message.warning("Không tìm thấy dữ liệu.");
+                }
+            } catch (error) {
+                message.error("Lỗi khi lấy dữ liệu.");
+                console.error(error);
+            } finally {
+                if (isMounted) setLoading(false);
+            }
+        };
+
+        fetchData();
+
+        return () => {
+            isMounted = false; // tránh update khi unmounted
+        };
+    }, [id]);
+
+    if (loading) return <Spin />;
+
+    if (!data) return <div>Không có dữ liệu</div>;
     return (
         <div className="home__container">
             <div className="home__container__head">
                 <img
-                    src="https://i.pinimg.com/736x/70/36/67/7036672cbad39617f1742c3b02aaa2bd.jpg"
-                    alt=""
+                    src={data.bannerUrl || ""}
+                    alt={data.name || "Anonymouse"}
                     className="home__container__head__image"
                 />
                 <div className="home__container__head__avatar">
-                    <img src="https://i.pinimg.com/736x/55/55/c2/5555c203a84e686e3231af8948c350d4.jpg" alt="" />
+                    <img src={data.avatarUrl || ""} alt={data.name} />
                 </div>
                 <div className="home__container__head__info">
-                    <h1 className="home__container__head__info__title">Vo Ngoc Min Kien</h1>
-                    <p className="home__container__head__info__description">
-                        “A beautiful painting is made by the way you capture the beauty of the world on it.”
-                    </p>
+                    <h1 className="home__container__head__info__title">{data.name || "Anonymouse"}</h1>
+                    <p className="home__container__head__info__description">{data.description || ""}</p>
                 </div>
             </div>
             <div className="home__container__content">
-                {fakeData(3).map((_, index) => (
-                    <ItemSocialMedia key={index} />
+                {data.links.map((link, index) => (
+                    <ItemSocialMedia key={index} {...link} />
                 ))}
             </div>
         </div>

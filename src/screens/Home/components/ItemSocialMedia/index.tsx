@@ -2,12 +2,18 @@ import { memo } from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
 
-const ItemSocialMedia: React.FC = () => {
+type dataLink = {
+    image: string;
+    title: string;
+    url: string;
+};
+
+const ItemSocialMedia: React.FC<dataLink> = (dataLink) => {
     return (
-        <Link to={""} className="item_social_media__container">
-            <img src="https://i.pinimg.com/736x/e5/69/d8/e569d8ebf248c5f40fd180aaf2fbb48e.jpg" alt="" />
+        <Link to={dataLink.url || ""} className="item_social_media__container">
+            <img src={dataLink.image || ""} alt={dataLink.title || ""} />
             <div className="item_social_media__container__content">
-                <p>Facebook</p>
+                <p>{dataLink.title || ""}</p>
             </div>
         </Link>
     );

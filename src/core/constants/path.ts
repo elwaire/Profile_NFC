@@ -1,5 +1,5 @@
 const PATHS = {
-    HOME: '/',
+    HOME: '/:id',
 }
 
 export default PATHS

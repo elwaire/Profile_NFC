@@ -1,0 +1,15 @@
+.item_social_media__container{
+    @apply w-full bg-yellow-300 relative h-[200px] rounded-xl overflow-hidden;
+
+    img{
+        @apply w-full h-full object-cover;
+    }
+
+    &__content{
+        @apply bg-gradient-to-t h-1/2 flex flex-col justify-end from-[#00000093] absolute bottom-0 left-0 w-full p-4;
+    
+        p{
+            @apply text-white text-lg;
+        }
+    }
+}
